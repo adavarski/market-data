@@ -28,9 +28,6 @@ stage('Test') {
   sh("docker run --rm ${service} python setup.py test")
 }
 
-$ docker tag market-data:master.5 davarski/market-data:5
-$ docker push davarski/market-data:5
-
 def tagToDeploy = "davarski/market-data:${env.BUILD_NUMBER}"
 
 stage('Publish') {
