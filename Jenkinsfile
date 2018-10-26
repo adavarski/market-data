@@ -1,10 +1,3 @@
-stage("Build Info") {
-  node {
-    def commit = checkout scm
-    echo "Latest commit id: ${commit.GIT_COMMIT}"
-  }
-}
-
 def withPod(body) {
   podTemplate(label: 'pod', serviceAccount: 'jenkins', containers: [
       containerTemplate(name: 'docker', image: 'docker', command: 'cat', ttyEnabled: true),
