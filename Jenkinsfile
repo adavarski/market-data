@@ -30,3 +30,20 @@ withPod {
     }
   }
 }
+
+stage('Test') {
+  try {
+    sh("docker run -v `pwd`:/workspace --rm ${service} python setup.py test")
+  } finally {
+    step([$class: 'JUnitResultArchiver', testResults: 'results.xml'])
+  }
+}
+
+def tagToDeploy = "davarski/${service}"
+
+stage('Publish') {
+  withDockerRegistry(registry: [credentialsId: 'dockerhub']) {
+    sh("docker tag ${service} ${tagToDeploy}")
+    sh("docker push ${tagToDeploy}")
+  }
+}
