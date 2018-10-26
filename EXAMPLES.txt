@@ -62,7 +62,11 @@ helm init
 
 N.B. 
 kubectl -n jenkins create sa jenkins
+kubectl create clusterrolebinding jenkins --clusterrole cluster-admin --serviceaccount=default:jenkins
+
 kubectl create clusterrolebinding jenkins --clusterrole cluster-admin --serviceaccount=jenkins:jenkins
+
+
 clusterrolebinding.rbac.authorization.k8s.io/jenkins created
 
 
