@@ -28,11 +28,14 @@ stage('Test') {
   sh("docker run --rm ${service} python setup.py test")
 }
 
-def tagToDeploy = "davarski/${service}"
+$ docker tag market-data:master.5 davarski/market-data:5
+$ docker push davarski/market-data:5
+
+def tagToDeploy = "davarski/market-data:${env.BUILD_NUMBER}"
 
 stage('Publish') {
   withDockerRegistry(registry: [credentialsId: 'dockerhub']) {
-    sh("docker tag ${service} ${tagToDeploy}")
+    sh("docker tag market-data:master.${env.BUILD_NUMBER} ${tagToDeploy}")
     sh("docker push ${tagToDeploy}")
   }
 }
