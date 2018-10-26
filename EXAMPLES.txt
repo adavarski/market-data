@@ -64,14 +64,8 @@ N.B.
 kubectl -n jenkins create sa jenkins
 kubectl create clusterrolebinding jenkins --clusterrole cluster-admin --serviceaccount=jenkins:jenkins
 
+kubectl create clusterrolebinding default --clusterrole cluster-admin --serviceaccount=jenkins:default
 
-RBAC
-
-If running upon a cluster with RBAC enabled you will need to do the following:
-
-helm install stable/jenkins --set rbac.install=true
-Create a Jenkins credential of type Kubernetes service account with service account name provided in the helm status output.
-Under configure Jenkins -- Update the credentials config in the cloud section to use the service account credential you created in the step above.
 
 
 
