@@ -15,7 +15,7 @@ withPod(label) {
   node(label) {
     // def tag = "${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
     def service = "market-data:master.29"
-    def tagToDeploy = "morganjbruce/market-data:master.29"
+    def tagToDeploy = "adavarski/market-data:master.29"
 
     checkout scm
     //
