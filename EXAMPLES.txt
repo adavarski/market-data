@@ -60,7 +60,11 @@ tar -zxvf helm-v2.11.0-linux-amd64.tar.gz
 sudo cp  linux-amd64/helm /usr/local/bin/helm
 helm init
 
-N.B. kubectl create clusterrolebinding jenkins --clusterrole cluster-admin --serviceaccount=jenkins:default
+N.B. 
+kubectl -n jenkins create sa jenkins
+kubectl create clusterrolebinding jenkins --clusterrole cluster-admin --serviceaccount=jenkins:jenkins
+clusterrolebinding.rbac.authorization.k8s.io/jenkins created
+
 
 
 Listing A.4 Installing Jenkins
