@@ -28,11 +28,13 @@ stage('Test') {
   sh("docker run --rm ${service} python setup.py test")
 }
 
-def tagToDeploy = "davarski/market-data:${env.BUILD_NUMBER}"
+def tagToDeploy = "market-data:${env.BUILD_NUMBER}"
 
-stage('Publish') {
-  withDockerRegistry(registry: [credentialsId: 'dockerhub']) {
-    sh("docker tag market-data:master.${env.BUILD_NUMBER} ${tagToDeploy}")
-    sh("docker push ${tagToDeploy}")
+stage('Deploy') {
+  sh("sed -i.bak 's#BUILD_TAG#${tagToDeploy}#' ./deploy/staging/*.yml")
+
+  container('kubectl') {
+    sh("kubectl --namespace=staging apply -f deploy/staging/")
   }
 }
+
