@@ -25,11 +25,7 @@ withPod {
 }
 
 stage('Test') {
-  try {
-    sh("docker run -v `pwd`:/workspace --rm ${service} python setup.py test")
-  } finally {
-    step([$class: 'JUnitResultArchiver', testResults: 'results.xml'])
-  }
+  sh("docker run --rm ${service} python setup.py test")
 }
 
 def tagToDeploy = "davarski/${service}"
