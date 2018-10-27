@@ -19,8 +19,9 @@ spec:
     spec:
       containers:
       - name: market-data
-        imagePullPolicy: IfNotPresent
-        image: BUILD_TAG #A
+        #image: BUILD_TAG 
+        image:davarski/market-data:5
+        
         resources:
           requests:
             cpu: 100m
