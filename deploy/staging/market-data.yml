@@ -20,7 +20,7 @@ spec:
       containers:
       - name: market-data
         #image: BUILD_TAG 
-        image:davarski/market-data:5
+        image: davarski/market-data:5
         
         resources:
           requests:
