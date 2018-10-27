@@ -25,6 +25,12 @@ withPod {
       stage('Test') {
          sh("docker run --rm ${service} python setup.py test")
    }
+      stage('Publish') {
+          docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
+            sh("docker tag ${service} davarski/${tagToDeploy}")
+            sh("docker push davarski/${tagToDeploy}")
+        }
+      }
  }
 
     stage('Deploy') {
