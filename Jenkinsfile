@@ -22,18 +22,9 @@ withPod {
       stage('Build') {
         sh("docker build -t ${service} .")
       }
-      
       stage('Test') {
          sh("docker run --rm ${service} python setup.py test")
-      }
-      
-      stage('Publish') {
-           withDockerRegistry(registry: [credentialsId: 'dockerhub']) {
-           sh("docker tag ${service} davarski/${tagToDeploy}")
-           sh("docker push davarski/${tagToDeploy}")
-      }
-      }
-
+   }
  }
 
     stage('Deploy') {
@@ -44,7 +35,6 @@ withPod {
 
   }
 }
-    
+
  }
 }
-
