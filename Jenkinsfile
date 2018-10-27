@@ -13,6 +13,8 @@ withPod {
   node('pod') {
     def tag = "${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
     def service = "market-data:${tag}"
+    def tagToDeploy = "market-data:${env.BUILD_NUMBER}"
+
 
     checkout scm
 
@@ -20,29 +22,19 @@ withPod {
       stage('Build') {
         sh("docker build -t ${service} .")
       }
-    }
-  }
-}
+      stage('Test') {
+         sh("docker run --rm ${service} python setup.py test")
+   }
+ }
 
-stage('Test') {
-  sh("docker run --rm ${service} python setup.py test")
-}
-
-withPod {
-  node('pod') {
-    checkout scm
-
-def tagToDeploy = "market-data:${env.BUILD_NUMBER}"
-
-stage('Deploy') {
+    stage('Deploy') {
       sh("sed -i.bak 's#BUILD_TAG#${tagToDeploy}#' ./deploy/staging/*.yml")
+   
+    container('kubectl') {
+        sh("kubectl --namespace=staging apply -f ./deploy/staging")
 
-      container('kubectl') {
-        sh("kubectl --namespace=staging apply -f deploy/staging")
-
-        
-      }
-    }
   }
 }
 
+ }
+}
