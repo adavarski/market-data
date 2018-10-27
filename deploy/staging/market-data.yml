@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: market-data
 spec:
-  replicas: 3
+  replicas: 2
   strategy:
     type: RollingUpdate
     rollingUpdate:
