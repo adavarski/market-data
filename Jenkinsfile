@@ -28,13 +28,21 @@ stage('Test') {
   sh("docker run --rm ${service} python setup.py test")
 }
 
+withPod {
+  node('pod') {
+    checkout scm
+
 def tagToDeploy = "market-data:${env.BUILD_NUMBER}"
 
 stage('Deploy') {
-  sh("sed -i.bak 's#BUILD_TAG#${tagToDeploy}#' ./deploy/staging/*.yml")
+      sh("sed -i.bak 's#BUILD_TAG#${tagToDeploy}#' ./deploy/staging/*.yml")
 
-  container('kubectl') {
-    sh("kubectl --namespace=staging apply -f deploy/staging/")
+      container('kubectl') {
+        sh("kubectl --namespace=staging apply -f deploy/staging")
+
+        
+      }
+    }
   }
 }
 
