@@ -19,7 +19,8 @@ spec:
     spec:
       containers:
       - name: market-data
-        image: BUILD_TAG 
+        image: BUILD_TAG
+        imagePullPolicy: Never
         resources:
           requests:
             cpu: 100m
