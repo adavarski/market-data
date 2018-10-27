@@ -69,7 +69,8 @@ io.fabric8.kubernetes.client.KubernetesClientException: Failure executing: GET a
 
 !!!! kubectl create clusterrolebinding default --clusterrole cluster-admin --serviceaccount=jenkins:default
 
-
+kubectl create namespace staging
+kubectl create clusterrolebinding default2 --clusterrole cluster-admin --serviceaccount=staging:default
 
 
 Listing A.4 Installing Jenkins
