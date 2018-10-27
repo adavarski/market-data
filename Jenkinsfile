@@ -13,7 +13,7 @@ withPod {
   node('pod') {
     def tag = "${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
     def service = "market-data:${tag}"
-    def tagToDeploy = "market-data:${env.BUILD_NUMBER}"
+    def tagToDeploy = "market-data:${tag}"
 
 
     checkout scm
